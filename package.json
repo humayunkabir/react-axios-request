@@ -1,0 +1,55 @@
+{
+  "name": "react-axios-request",
+  "version": "0.1.0",
+  "description": "Promise based HTTP client for the ReactJS",
+  "private": false,
+  "main": "index.js",
+  "scripts": {
+    "babel": "./node_modules/.bin/babel",
+    "dist": "rm -rf dist && mkdir dist && babel src/*.* --out-dir dist --copy-files && cp package.json dist && cp .gitignore dist && cp README.md dist",
+    "build": "npm run dist && cd dist"
+  },
+  "keywords": [
+    "react",
+    "react-axios",
+    "axios",
+    "request",
+    "axios"
+  ],
+  "author": {
+    "name": "Humayun Kabir",
+    "email": "humayunkabir.cep@gmail.com",
+    "url": "http://humayunkabir.github.io"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "ISC",
+  "peerDependencies": {
+    "axios": "^0.19.2",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "axios": "^0.19.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
