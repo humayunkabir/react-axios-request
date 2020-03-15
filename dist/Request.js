@@ -31,8 +31,8 @@ var Request = function Request(_ref) {
   var method = _ref.method,
       base = _ref.base,
       route = _ref.route,
-      path = _ref.path,
       body = _ref.body,
+      config = _ref.config,
       children = _ref.children;
 
   var _useState = (0, _react.useState)(null),
@@ -45,7 +45,7 @@ var Request = function Request(_ref) {
       error = _useState4[0],
       setError = _useState4[1];
 
-  var url = base && route ? "".concat(base, "/").concat(route) : path;
+  var url = base + route;
 
   var handleData = function handleData(_ref2) {
     var data = _ref2.data;
@@ -76,7 +76,7 @@ var Request = function Request(_ref) {
 
             case 3:
               _context.next = 5;
-              return _axios.default[method.toLowerCase()](url, body || props);
+              return _axios.default[method.toLowerCase()](url, body || props, config);
 
             case 5:
               result = _context.sent;
@@ -102,9 +102,9 @@ var Request = function Request(_ref) {
 
   (0, _react.useEffect)(function () {
     if (method === "get") {
-      _axios.default.get(url).then(handleData).catch(handleError);
+      _axios.default.get(url, config).then(handleData).catch(handleError);
     }
-  }, [method, url]);
+  }, [method, url, config]);
   return children({
     data: data,
     error: error,
@@ -114,18 +114,17 @@ var Request = function Request(_ref) {
 
 Request.propTypes = {
   children: _propTypes.default.func.isRequired,
+  base: _propTypes.default.string.isRequired,
   method: _propTypes.default.oneOf(["get", "post", "patch", "put", "delete"]),
-  base: _propTypes.default.string,
   route: _propTypes.default.string,
-  path: _propTypes.default.string,
+  config: _propTypes.default.object,
   body: _propTypes.default.object
 };
 Request.defaultProps = {
   method: "get",
-  base: "./",
-  route: "",
-  path: "./",
-  body: null
+  route: "/",
+  body: null,
+  config: null
 };
 var _default = Request;
 exports.default = _default;

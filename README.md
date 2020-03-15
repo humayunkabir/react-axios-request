@@ -175,8 +175,15 @@ import React from "react";
 import Request from "react-axios-request/Request"
 import { apiBaseUrl } from "./config"
 
+const requestConfig = {
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`
+  }
+};
+
 const App = () => (
-  <Request path={apiBaseUrl}>
+  <Request base={apiBaseUrl} config={requestConfig}>
     {({ data, error, requestCallback }) => (
       <h4>{data?.title}</h4>
       <p>{data?.description}</p>
@@ -186,5 +193,3 @@ const App = () => (
 
 export default App
 ```
-
-**Note:** You can pass `path` insted of `base` and `route`.
