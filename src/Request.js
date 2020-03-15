@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Axios from "axios";
 import RequestException from "./RequestException";
 
-const Request = ({ type, base, route, path, body, children }) => {
+const Request = ({ method, base, route, path, body, children }) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -19,12 +19,12 @@ const Request = ({ type, base, route, path, body, children }) => {
     return error;
   };
 
-  const rcb = async props => {
+  const requestCallback = async props => {
     try {
       if (!(body || props)) {
         throw new RequestException("Request body is reqired");
       }
-      const result = await Axios[type.toLowerCase()](url, body || props);
+      const result = await Axios[method.toLowerCase()](url, body || props);
       return handleData(result);
     } catch (error) {
       return handleError(error);
@@ -32,19 +32,19 @@ const Request = ({ type, base, route, path, body, children }) => {
   };
 
   useEffect(() => {
-    if (type === "GET") {
+    if (method === "get") {
       Axios.get(url)
         .then(handleData)
         .catch(handleError);
     }
-  }, [type, url]);
+  }, [method, url]);
 
-  return children({ data, error, rcb });
+  return children({ data, error, requestCallback });
 };
 
 Request.propTypes = {
   children: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(["GET", "POST", "PATCH", "DELTE"]),
+  method: PropTypes.oneOf(["get", "post", "patch", "put", "delete"]),
   base: PropTypes.string,
   route: PropTypes.string,
   path: PropTypes.string,
@@ -52,7 +52,7 @@ Request.propTypes = {
 };
 
 Request.defaultProps = {
-  type: "GET",
+  method: "get",
   base: "./",
   route: "",
   path: "./",
