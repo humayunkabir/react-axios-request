@@ -1,6 +1,6 @@
 {
   "name": "react-axios-request",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Promise based HTTP client for ReactJS",
   "private": false,
   "main": "index.js",
@@ -15,7 +15,7 @@
     "react-axios",
     "axios",
     "request",
-    "axios"
+    "axios-request"
   ],
   "author": {
     "name": "Humayun Kabir",

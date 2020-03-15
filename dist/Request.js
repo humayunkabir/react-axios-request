@@ -19,6 +19,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -35,27 +41,39 @@ var Request = function Request(_ref) {
       config = _ref.config,
       children = _ref.children;
 
-  var _useState = (0, _react.useState)(null),
+  var _useState = (0, _react.useState)({
+    loading: true,
+    data: null,
+    error: null
+  }),
       _useState2 = _slicedToArray(_useState, 2),
-      data = _useState2[0],
-      setData = _useState2[1];
+      respone = _useState2[0],
+      setResponse = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(null),
-      _useState4 = _slicedToArray(_useState3, 2),
-      error = _useState4[0],
-      setError = _useState4[1];
-
-  var url = base + route;
+  var url = base + (route && "/".concat(route));
 
   var handleData = function handleData(_ref2) {
     var data = _ref2.data;
-    setData(data);
-    return data;
+
+    var newResponse = _objectSpread({}, respone, {
+      data: data,
+      loading: false,
+      error: null
+    });
+
+    setResponse(newResponse);
+    return newResponse;
   };
 
   var handleError = function handleError(error) {
-    setError(error);
-    return error;
+    var newResponse = _objectSpread({}, respone, {
+      error: error,
+      loading: false,
+      data: null
+    });
+
+    setResponse(newResponse);
+    return newResponse;
   };
 
   var requestCallback = /*#__PURE__*/function () {
@@ -103,13 +121,12 @@ var Request = function Request(_ref) {
   (0, _react.useEffect)(function () {
     if (method === "get") {
       _axios.default.get(url, config).then(handleData).catch(handleError);
-    }
-  }, [method, url, config]);
-  return children({
-    data: data,
-    error: error,
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, []);
+  return children(_objectSpread({}, respone, {
     requestCallback: requestCallback
-  });
+  }));
 };
 
 Request.propTypes = {
@@ -122,7 +139,7 @@ Request.propTypes = {
 };
 Request.defaultProps = {
   method: "get",
-  route: "/",
+  route: "",
   body: null,
   config: null
 };
