@@ -178,8 +178,8 @@ import { apiBaseUrl } from "./config"
 const App = () => (
   <Request path={apiBaseUrl}>
     {({ data, error, requestCallback }) => (
-      <h4 className="mb-0">{data?.title}</h4>
-      <p className="mb-0">{data?.description}</p>
+      <h4>{data?.title}</h4>
+      <p>{data?.description}</p>
     )}
   </Request>
 )

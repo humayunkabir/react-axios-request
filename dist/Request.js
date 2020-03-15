@@ -28,7 +28,7 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Request = function Request(_ref) {
-  var type = _ref.type,
+  var method = _ref.method,
       base = _ref.base,
       route = _ref.route,
       path = _ref.path,
@@ -58,7 +58,7 @@ var Request = function Request(_ref) {
     return error;
   };
 
-  var rcb = /*#__PURE__*/function () {
+  var requestCallback = /*#__PURE__*/function () {
     var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(props) {
       var result;
       return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -76,7 +76,7 @@ var Request = function Request(_ref) {
 
             case 3:
               _context.next = 5;
-              return _axios.default[type.toLowerCase()](url, body || props);
+              return _axios.default[method.toLowerCase()](url, body || props);
 
             case 5:
               result = _context.sent;
@@ -95,33 +95,33 @@ var Request = function Request(_ref) {
       }, _callee, null, [[0, 9]]);
     }));
 
-    return function rcb(_x) {
+    return function requestCallback(_x) {
       return _ref3.apply(this, arguments);
     };
   }();
 
   (0, _react.useEffect)(function () {
-    if (type === "GET") {
+    if (method === "get") {
       _axios.default.get(url).then(handleData).catch(handleError);
     }
-  }, [type, url]);
+  }, [method, url]);
   return children({
     data: data,
     error: error,
-    rcb: rcb
+    requestCallback: requestCallback
   });
 };
 
 Request.propTypes = {
   children: _propTypes.default.func.isRequired,
-  type: _propTypes.default.oneOf(["GET", "POST", "PATCH", "DELTE"]),
+  method: _propTypes.default.oneOf(["get", "post", "patch", "put", "delete"]),
   base: _propTypes.default.string,
   route: _propTypes.default.string,
   path: _propTypes.default.string,
   body: _propTypes.default.object
 };
 Request.defaultProps = {
-  type: "GET",
+  method: "get",
   base: "./",
   route: "",
   path: "./",
