@@ -83,15 +83,16 @@ Let's create a `Login` compoentet using `Request`
 
 ```
 const useAuth = () => {
-  const login = async (requestCallback, cb) => {
-    const result = await requestCallback() // Assume we get an access token in result
+  const login = async (requestCallback, loginCallback) => {
+    const response = await requestCallback() // Assume we get an access token in response
 
-    if (result?.accessToken) {
+    if (response?.data) {
+       const { accessToken, ...rest } = response.data;
       // Do whatever you want with this accessToken
       localStorage.setItem("accessToken", accessToken)
 
       // Now calling the callback which is passed from the Login component
-      !!cb && cb()
+      !!loginCallback && loginCallback()
     }
   };
 
@@ -166,7 +167,7 @@ const Login = () => {
 export default Login;
 ```
 
-#### Get Request:
+#### Get Request
 
 In `Request` component, `default` method is `get`. To make a `get` request, you don't have to pass `method='get'` to `Request` component.
 
@@ -178,7 +179,7 @@ import { apiBaseUrl } from "./config"
 const requestConfig = {
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`
+    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
   }
 };
 
@@ -192,4 +193,27 @@ const App = () => (
 )
 
 export default App
+```
+
+### Configuration
+
+Make a component `ReactAxiosRequest` and use this component insted of `Request`. Now you don't have to pass `base` and `config` everytime you use this component like you have to pass in `Request` component.
+
+```
+import React from "react";
+import Request from "react-axios-request/Request"
+import { apiBaseUrl } from "./config";
+
+const ReactAxiosRequest = props => {
+  const requestConfig = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }
+  };
+
+  return <Request base={apiBaseUrl} config={requestConfig} {...props} />;
+};
+
+export default ReactAxiosRequest;
 ```

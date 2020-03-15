@@ -4,19 +4,24 @@ import Axios from "axios";
 import RequestException from "./RequestException";
 
 const Request = ({ method, base, route, body, config, children }) => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+  const [respone, setResponse] = useState({
+    loading: true,
+    data: null,
+    error: null
+  });
 
-  const url = base + route;
+  const url = base + (route && `/${route}`);
 
   const handleData = ({ data }) => {
-    setData(data);
-    return data;
+    const newResponse = { ...respone, data, loading: false, error: null };
+    setResponse(newResponse);
+    return newResponse;
   };
 
   const handleError = error => {
-    setError(error);
-    return error;
+    const newResponse = { ...respone, error, loading: false, data: null };
+    setResponse(newResponse);
+    return newResponse;
   };
 
   const requestCallback = async props => {
@@ -41,9 +46,10 @@ const Request = ({ method, base, route, body, config, children }) => {
         .then(handleData)
         .catch(handleError);
     }
-  }, [method, url, config]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  return children({ data, error, requestCallback });
+  return children({ ...respone, requestCallback });
 };
 
 Request.propTypes = {
@@ -57,7 +63,7 @@ Request.propTypes = {
 
 Request.defaultProps = {
   method: "get",
-  route: "/",
+  route: "",
   body: null,
   config: null
 };
