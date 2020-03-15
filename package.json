@@ -1,6 +1,6 @@
 {
   "name": "react-axios-request",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Promise based HTTP client for ReactJS",
   "private": false,
   "main": "index.js",
@@ -23,8 +23,9 @@
     "url": "http://humayunkabir.github.io"
   },
   "files": [
-    "dist",
-    "src"
+    "dist/index.js",
+    "dist/Request.js",
+    "dist/RequestException.js"
   ],
   "license": "ISC",
   "peerDependencies": {
