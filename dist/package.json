@@ -1,14 +1,16 @@
 {
   "name": "react-axios-request",
-  "version": "0.1.3",
+  "version": "0.1.6",
   "description": "Promise based HTTP client for ReactJS",
   "private": false,
   "main": "index.js",
   "scripts": {
     "babel": "./node_modules/.bin/babel",
-    "dist": "rm -rf dist && mkdir dist && babel src/*.* --out-dir dist --copy-files && cp package.json dist && cp .gitignore dist && cp README.md dist",
-    "build": "npm run dist",
-    "local": "npm run dist && cd dist && npm pack && mv $npm_package_name-$npm_package_version.tgz ../"
+    "dist": "rm -rf dist && mkdir dist && babel src --out-dir dist --copy-files && cp package.json dist && cp README.md dist && cp LICENSE dist",
+    "lib": "rm -rf lib && mkdir lib && babel src --out-dir lib --copy-files",
+    "build": "npm run dist && npm run lib",
+    "local": "npm run dist && cd dist && npm pack && mv $npm_package_name-$npm_package_version.tgz ../",
+    "deploy": "npm run build && cd dist && npm publish"
   },
   "keywords": [
     "react",
@@ -22,12 +24,20 @@
     "email": "humayunkabir.cep@gmail.com",
     "url": "http://humayunkabir.github.io"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/humayunkabir/react-axios-request.git",
+    "directory": "packages/react-axios-request"
+  },
+  "bugs": {
+    "url": "https://github.com/humayunkabir/react-axios-request/issues"
+  },
+  "homepage": "https://github.com/humayunkabir/react-axios-request/blob/master/README.md",
   "files": [
-    "dist/index.js",
-    "dist/Request.js",
-    "dist/RequestException.js"
+    "dist",
+    "lib"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "axios": "^0.19.2",
     "prop-types": "^15.7.2",

@@ -1,6 +1,16 @@
 # React Axios Request
 
-Promise based HTTP client for ReactJS,
+Promise based HTTP client for ReactJS. [React Axios Request](https://github.com/humayunkabir/react-axios-request/) use [Axios](https://github.com/axios/axios) under the hood.
+
+```
+npm i react-axios-request
+```
+
+or
+
+```
+yarn add react-axios-request
+```
 
 You can perform these requests:
 
@@ -16,7 +26,7 @@ You can perform these requests:
 
 ```
 import React from "react";
-import Request from "react-axios-request/Request"
+import { Request } from "react-axios-request";
 import { apiBaseUrl } from "./config"
 
 const UserUpdate = () => {
@@ -109,7 +119,7 @@ const useAuth = () => {
 
 ```
 import React, { useState } from "react";
-import Request from "react-axios-request/Request"
+import { Request } from "react-axios-request";
 
 const Login = () => {
   const { login } = useAuth();
@@ -173,8 +183,8 @@ In `Request` component, `default` method is `get`. To make a `get` request, you 
 
 ```
 import React from "react";
-import Request from "react-axios-request/Request"
-import { apiBaseUrl } from "./config"
+import { Request } from "react-axios-request";
+import { apiBaseUrl } from "./config";
 
 const requestConfig = {
   headers: {
@@ -190,9 +200,9 @@ const App = () => (
       <p>{data?.description}</p>
     )}
   </Request>
-)
+);
 
-export default App
+export default App;
 ```
 
 ### Configuration
@@ -201,7 +211,7 @@ Make a component `ReactAxiosRequest` and use this component insted of `Request`.
 
 ```
 import React from "react";
-import Request from "react-axios-request/Request"
+import { Request } from "react-axios-request";
 import { apiBaseUrl } from "./config";
 
 const ReactAxiosRequest = props => {

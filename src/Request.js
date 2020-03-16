@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Axios from "axios";
-import RequestException from "./RequestException";
+import RequestException from "./requestException";
 
 const Request = ({ method, base, route, body, config, children }) => {
   const [respone, setResponse] = useState({
