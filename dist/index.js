@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.RequestException = void 0;
+exports.default = exports.RequestException = exports.Request = void 0;
 
 var _react = require("react");
 
@@ -152,6 +152,7 @@ var Request = function Request(_ref) {
   }));
 };
 
+exports.Request = Request;
 Request.propTypes = {
   children: _propTypes.default.func.isRequired,
   base: _propTypes.default.string.isRequired,
@@ -185,5 +186,9 @@ var RequestException = /*#__PURE__*/function (_Error) {
 }( /*#__PURE__*/_wrapNativeSuper(Error));
 
 exports.RequestException = RequestException;
+var ReactAxiosRequest = {
+  Request: Request,
+  RequestException: RequestException
+};
 var _default = ReactAxiosRequest;
 exports.default = _default;

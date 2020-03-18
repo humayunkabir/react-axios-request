@@ -1,6 +1,6 @@
 {
   "name": "react-axios-request",
-  "version": "0.1.9",
+  "version": "1.0.0",
   "description": "Promise based HTTP client for ReactJS",
   "private": false,
   "main": "index.js",

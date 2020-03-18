@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Axios from "axios";
 
-const Request = ({ method, base, route, body, config, children }) => {
+export const Request = ({ method, base, route, body, config, children }) => {
   const [response, setResponse] = useState({
     loading: true,
     data: null,
@@ -75,5 +75,7 @@ export class RequestException extends Error {
     this.name = "RequestException";
   }
 }
+
+const ReactAxiosRequest = { Request, RequestException };
 
 export default ReactAxiosRequest;
