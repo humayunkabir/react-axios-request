@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Axios from "axios";
 
-export const Request = ({ method, base, route, body, config, children }) => {
-  const [respone, setResponse] = useState({
+const Request = ({ method, base, route, body, config, children }) => {
+  const [response, setResponse] = useState({
     loading: true,
     data: null,
     error: null
@@ -12,18 +12,19 @@ export const Request = ({ method, base, route, body, config, children }) => {
   const url = base + (route && `/${route}`);
 
   const handleData = ({ data }) => {
-    const newResponse = { ...respone, data, loading: false, error: null };
+    const newResponse = { ...response, data, loading: false, error: null };
     setResponse(newResponse);
     return newResponse;
   };
 
   const handleError = error => {
-    const newResponse = { ...respone, error, loading: false, data: null };
+    const newResponse = { ...response, error, loading: false, data: null };
     setResponse(newResponse);
     return newResponse;
   };
 
   const requestCallback = async props => {
+    setResponse({ ...response, loading: true });
     try {
       if (!(body || props)) {
         throw new RequestException("Request body is reqired");
@@ -48,7 +49,7 @@ export const Request = ({ method, base, route, body, config, children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return children({ ...respone, requestCallback });
+  return children({ ...response, requestCallback });
 };
 
 Request.propTypes = {
@@ -74,7 +75,5 @@ export class RequestException extends Error {
     this.name = "RequestException";
   }
 }
-
-const ReactAxiosRequest = { Request, RequestException };
 
 export default ReactAxiosRequest;

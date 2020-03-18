@@ -4,7 +4,7 @@ import Axios from "axios";
 import RequestException from "./requestException";
 
 const Request = ({ method, base, route, body, config, children }) => {
-  const [respone, setResponse] = useState({
+  const [response, setResponse] = useState({
     loading: true,
     data: null,
     error: null
@@ -13,18 +13,19 @@ const Request = ({ method, base, route, body, config, children }) => {
   const url = base + (route && `/${route}`);
 
   const handleData = ({ data }) => {
-    const newResponse = { ...respone, data, loading: false, error: null };
+    const newResponse = { ...response, data, loading: false, error: null };
     setResponse(newResponse);
     return newResponse;
   };
 
   const handleError = error => {
-    const newResponse = { ...respone, error, loading: false, data: null };
+    const newResponse = { ...response, error, loading: false, data: null };
     setResponse(newResponse);
     return newResponse;
   };
 
   const requestCallback = async props => {
+    setResponse({ ...response, loading: true });
     try {
       if (!(body || props)) {
         throw new RequestException("Request body is reqired");
@@ -49,7 +50,7 @@ const Request = ({ method, base, route, body, config, children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return children({ ...respone, requestCallback });
+  return children({ ...response, requestCallback });
 };
 
 Request.propTypes = {
