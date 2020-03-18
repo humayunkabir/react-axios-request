@@ -227,3 +227,11 @@ const ReactAxiosRequest = props => {
 
 export default ReactAxiosRequest;
 ```
+
+**Please report bugs and contribute at github:**
+
+- [Repository](https://github.com/humayunkabir/react-axios-request)
+- [Issues](https://github.com/humayunkabir/react-axios-request/issues)
+- [Projects](https://github.com/humayunkabir/react-axios-request/projects)
+
+Powered by: [react-axios-request](https://github.com/humayunkabir/react-axios-request)
